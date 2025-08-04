@@ -4,3 +4,6 @@
 [submodule "frontend_react"]
 	path = frontend_react
 	url = https://github.com/danielxfeng/daniels_lab_frontend_react
+[submodule "web_deployment"]
+	path = web_deployment
+	url = https://github.com/danielxfeng/web_deployment
