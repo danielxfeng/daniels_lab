@@ -17,7 +17,7 @@ jobs:
       - name: Update submodule to latest commit
         run: |
           git submodule update --remote --merge
-          git add path/to/your-submodule
+          git add backend_node frontend_react web_deployment
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "chore: daily update submodule" || echo "No changes to commit"
