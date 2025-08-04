@@ -1,6 +1,6 @@
 [submodule "backend_node"]
 	path = backend_node
-	url = https://github.com/danielxfeng/a_blog_backend_node
+	url = https://github.com/danielxfeng/daniels_lab_backend_node
 [submodule "frontend_react"]
 	path = frontend_react
-	url = https://github.com/danielxfeng/a_blog_backend_react
+	url = https://github.com/danielxfeng/daniels_lab_frontend_react
