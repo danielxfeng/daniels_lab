@@ -14,7 +14,7 @@ services:
       - meilisearch
     networks:
       - web_net
-    command: sh -c "npm install ts-node && npx ts-node script/init_and_seed.ts && npx ts-node src/app.ts"
+    command: sh -c "npm install ts-node && npx prisma db push && npx ts-node script/init_and_seed.ts && npx ts-node src/app.ts"
 
   frontend-preview:
     build:
