@@ -1,0 +1,52 @@
+services:
+  backend-node:
+    build:
+      context: ./backend_node
+      dockerfile: Dockerfile
+      target: builder
+    container_name: blog_backend_preview
+    env_file:
+      - ./backend_node/.env.sample
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - meilisearch
+    networks:
+      - web_net
+    command: sh -c "npm install ts-node && npx ts-node script/init_and_seed.ts && npx ts-node src/app.ts"
+
+  frontend-preview:
+    build:
+      context: ./frontend_react
+      dockerfile: Dockerfile
+    container_name: blog_frontend_preview
+    env_file:
+      - ./frontend_react/.env.sample
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend-node
+    networks:
+      - web_net
+
+  postgres:
+    image: postgres:17
+    restart: always
+    env_file:
+      - ./backend_node/.env.sample
+    ports:
+      - "5432:5432"
+    networks:
+      - web_net
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.15
+    restart: always
+    ports:
+      - "7700:7700"
+    networks:
+      - web_net
+
+networks:
+  web_net:

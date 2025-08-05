@@ -14,48 +14,48 @@ On top of that, I wanted somewhere to share what I’ve learned along the way. S
 
 ### Frontend
 
-- **Particle Gravity**  
+- **Particle Gravity**
   To keep the site from feeling too boring, I added a lightweight particle system, basically a tiny background “mini‑game” on the homepage.
 
-- **Seamless Authentication**  
+- **Seamless Authentication**
   Sign‑ins use silent token refresh, and refresh tokens are bound to a device fingerprint for extra security. Sessions stay active without constant logins. (And still without cookies)
 
-- **Full‑Text Search with Local Suggestions**  
+- **Full‑Text Search with Local Suggestions**
   The search lets you do full text queries and also suggests results based on local search history for a more personal touch.
 
-- **Blog Filtering with Debounced Auto‑Submit**  
+- **Blog Filtering with Debounced Auto‑Submit**
   Blog filters auto‑submit when users input stops changing for a moment (no extra button clicks needed).
 
-- **Animations**  
+- **Animations**
   Some animations make the site feel alive, hopefully not too much, though. 🙂
 
-- **Tag Input with Throttle and Drag‑to‑Delete**  
+- **Tag Input with Throttle and Drag‑to‑Delete**
   When creating or updating posts, the tag selector shows real time suggestions with throttling and debouncing, plus responsive drag‑to‑delete interactions. (Unfortunately, this one’s admin‑only — just for me 🙂)
 
 ### Backend
 
-- **Modular and Stateless Design**  
+- **Modular and Stateless Design**
   The backend is split into independent modules, authentication and blog APIs can be separated and fully stateless. This makes it easy to scale or even split them into microservices in the future if needed.
 
-- **Authentication from Scratch**  
-  Built a custom authentication module from scratch, supporting both password login and multiple OAuth providers (Google, GitHub, LinkedIn).  
+- **Authentication from Scratch**
+  Built a custom authentication module from scratch, supporting both password login and multiple OAuth providers (Google, GitHub, LinkedIn).
   Implemented a dual‑token system with refresh tokens following a rotation policy: each refresh token is valid for a single use only.
 
-- **Pluggable Full‑Text Search (Elasticsearch / Meilisearch)**  
+- **Pluggable Full‑Text Search (Elasticsearch / Meilisearch)**
   Full text search is abstracted behind a unified interface, so the engine can be swapped out easily. (I first built it with Elasticsearch, but my tiny VPS couldn’t handle its memory usage.)
 
-- **User Data Validation Middleware**  
+- **User Data Validation Middleware**
   Requests are validated upfront with a validation middleware, ensuring consistent and secure data handling across all API endpoints.
 
 ### Deployment
 
-- **CI/CD Pipeline**  
+- **CI/CD Pipeline**
   Pushing to `main` runs the full test suite and, if all checks pass, deploys automatically. This keeps releases frequent and low‑risk — no manual steps, no surprises.
 
-- **Hybrid SaaS + VPS Architecture**  
+- **Hybrid SaaS + VPS Architecture**
   The frontend runs on **Vercel**, the database lives on **Neon**, and the backend plus search services are deployed to a lightweight **Azure VPS**. Everything sits behind **Cloudflare**, giving unified routing and security without extra complexity.
 
-- **One‑Command VPS Provisioning**  
+- **One‑Command VPS Provisioning**
   Built a custom script to configure the VPS from scratch: install dependencies, set up services, and even switch providers or scale up with a single command.
 
 ## Tech Stack
@@ -84,17 +84,37 @@ On top of that, I wanted somewhere to share what I’ve learned along the way. S
 - Cloudflare (routing & security)
 - GitHub Actions (CI/CD with submodule auto‑update)
 
-## **Repository Structure**
+---
 
-This repo includes the following submodules:
+## **Getting Started**
 
-- **`frontend_react/`**  
-  A modern React-based frontend, implementing the main user interface with routing, SEO, and interactive components.
+- **Clone the repository**
 
-- **`backend_node/`**  
-  A Node.js (Express/Fastify) backend providing RESTful APIs, authentication, and blog management services.
+```bash
+git clone --recursive https://github.com/danielxfeng/daniels_lab.git
+cd daniels_lab
+```
 
-- **`web_deployment/`**  
-  Deployment configuration and scripts for production environments (e.g., Docker, CI/CD pipelines).
+- **Start the development server**
+
+```bash
+docker compose -f docker-compose.preview.yml up --build
+```
+
+- **Open your browser**
+  - Navigate to `http://localhost:5173` to see the application
+  - Navigate to `http://localhost:3000/api/docs` to see the API docs
+
+- **Test users**
+  - User1: `demo_admin` : `DEMOpass123!`
+  - User2: `demo_user1` : `DEMOpass123!`
+  - User3: `demo_user1` : `DEMOpass123!`
+
+- **Limitation**
+  - OAuth‑based login (Google / GitHub / LinkedIn) is disabled in preview, since these providers do not issue keys for local preview environments.
 
 ---
+
+## **License**
+
+MIT License - feel free to use this project for your own needs!
