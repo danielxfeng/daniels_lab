@@ -21,14 +21,14 @@ services:
       context: ./frontend_react
       dockerfile: Dockerfile
     container_name: blog_frontend_preview
-    env_file:
-      - ./frontend_react/.env.sample
     ports:
       - "8080:8080"
     depends_on:
       - backend-node
     networks:
       - web_net
+    volumes:
+      - ./frontend_react/.env.preview:/app/.env
 
   postgres:
     image: postgres:17
