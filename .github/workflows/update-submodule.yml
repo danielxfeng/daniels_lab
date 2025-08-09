@@ -16,9 +16,12 @@ jobs:
 
       - name: Update submodule to latest commit
         run: |
-          git submodule update --remote --merge
+          git submodule sync --recursive
+          git submodule update --init --recursive
+
+          git submodule update --remote --recursive --checkout backend_node frontend_react web_deployment
+
           git add backend_node frontend_react web_deployment
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore: daily update submodule" || echo "No changes to commit"
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -m "chore: daily update submodule" || echo "No changes to commit"
           git push
